@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RocketBooks.Communication.Requests;
 using RocketBooks.Entities;
 
 namespace RocketBooks;
@@ -39,19 +38,7 @@ public class BookController : ControllerBase
 
         if (exists)
         {
-            return Conflict("Já existe um livro com esse título e autor");
-        }
-
-        if (request.Price <= 0)
-        {
-            return BadRequest("O preço deve ser maior que zero");
-        } else if (request.Stock < 0) {
-            return BadRequest("O estoque não pode ser negativo");
-        }
-
-        if (!Enum.TryParse<BookGenre>(request.Genre.ToString(), true, out _))
-        {
-            return BadRequest("Gênero inválido");
+            return Conflict("There is already a book with that title and author.");
         }
 
         var book = new Book
