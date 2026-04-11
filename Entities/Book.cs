@@ -2,7 +2,7 @@
 
 public class Book
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; } = Guid.NewGuid();
     public string Title { get; set; } = string.Empty;
     public string Author { get; set; } = string.Empty;
     public BookGenre Genre { get; set; }
