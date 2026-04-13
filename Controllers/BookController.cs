@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RocketBooks.Communication.Requests;
 using RocketBooks.Entities;
 
 namespace RocketBooks;
@@ -7,13 +8,13 @@ namespace RocketBooks;
 [ApiController]
 public class BookController : ControllerBase
 {
-    private static List<Book> _books = new List<Book>();
+    private readonly static List<Book> _books = [];
 
     [HttpGet]
     [Route("{id}")]
     [ProducesResponseType(typeof(Book), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult GetBookById([FromRoute] Guid id)
+    public IActionResult GetById([FromRoute] Guid id)
     {
         var exits = _books.Any(x => x.Id == id);
 
@@ -26,6 +27,13 @@ public class BookController : ControllerBase
         {
             return NotFound("Livro não encontrado");
         }        
+    }
+
+    [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Book>), StatusCodes.Status200OK)]
+    public IActionResult GetAll()
+    {
+        return Ok(_books);
     }
 
     [HttpPost]
